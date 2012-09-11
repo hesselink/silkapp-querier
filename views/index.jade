@@ -3,8 +3,8 @@ html
   head
     title= title
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    //link(rel='stylesheet', href='/libs/bootstrap/css/journal.bootstrap.min.css')
-    link(rel='stylesheet', href='/libs/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/libs/bootstrap/css/journal.bootstrap.min.css')
+    //link(rel='stylesheet', href='/libs/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/libs/bootstrap/css/bootstrap-responsive.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
@@ -12,18 +12,27 @@ html
     .navbar
       .navbar-inner
         .container
-          .brand Submit
+          .brand Silkapp Querier
 
     .container-fluid
       .row-fluid
-        form#formQuery.span4
+        form#formQuery.span12
           .control-group
             .control
-              textarea#fieldQuery(name="query", placeholder="query", rows="27")
+              textarea#fieldQuery(name="query", placeholder="query", rows="6")
           .control-group
             .control
-              button Query Silkapp
-        #response.span8
+              button Submit
+      .row-fluid
+        .span12.tabs.hidden
+          ul.nav.nav-tabs
+            li.active
+              a(href="#table", data-toggle="tab") Table
+            li
+              a(href="#timeline", data-toggle="tab") Timeline
+          .tab-content
+            .tab-pane.active#table
+            .tab-pane#timeline
 
     script(src="/libs/jquery/1.8.1.min.js")
     script(src="/libs/bootstrap/js/bootstrap.min.js")
