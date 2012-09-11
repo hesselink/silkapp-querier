@@ -22,22 +22,41 @@ slice from 0 to 99");
       tabs.removeClass("hidden");
       tabTable.html(responseAsXml);
       var response = [];
+      var dates = [];
       var parsed = $($.parseXML(responseAsXml));
       var rows = parsed.find("tbody").find("tr");
       rows.each(function (index) {
         var links = $(rows[index]).find("td").find("a");
         if (links.length === 3) {
           var country = $(links[0]).text();
-          var headOfStateDateOfBirth = $(links[1]).text();
-          var headOfStateName = $(links[2]).text();
+          var dateOfBirth = new Date($(links[1]).text());
+          dateOfBirth = dateOfBirth.getFullYear() + "," + dateOfBirth.getMonth() + "," + dateOfBirth.getDate();
+          var headOfState = $(links[2]).text();
           response.push({
-            country:country,
-            headOfState:headOfStateName,
-            dateOfBirth:headOfStateDateOfBirth
+            headline:country,
+            text:"<p>" + headOfState + " of " + country + " was born on " + dateOfBirth + "</p>",
+            startDate:dateOfBirth,
+            endDate:dateOfBirth
           });
+          dates.push(dateOfBirth);
         }
       });
-      console.log(response);
+      var timelineSource = {
+        timeline:{
+          headline:"Date of Births of Head of States",
+          type:"default",
+          text:"When were they born?",
+          startDate:"1900,1,1",
+          date:response
+        }
+      };
+      createStoryJS({
+        type:"timeline",
+        width:950,
+        height:330,
+        source:timelineSource,
+        embed_id:"timeline"
+      });
     });
   });
 
