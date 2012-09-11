@@ -32,10 +32,8 @@ slice from 0 to 99");
           var headOfStateName = $(links[2]).text();
           response.push({
             country:country,
-            headOfState:{
-              name:headOfStateName,
-              dateOfBirth:headOfStateDateOfBirth
-            }
+            headOfState:headOfStateName,
+            dateOfBirth:headOfStateDateOfBirth
           });
         }
       });
