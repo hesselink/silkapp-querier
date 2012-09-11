@@ -18,9 +18,28 @@ slice from 0 to 99");
 
   formQuery.submit(function (event) {
     event.preventDefault();
-    $.post("/query", {query:fieldQuery.val()}, function (response) {
+    $.post("/query", {query:fieldQuery.val()}, function (responseAsXml) {
       tabs.removeClass("hidden");
-      tabTable.html(response);
+      tabTable.html(responseAsXml);
+      var response = [];
+      var parsed = $($.parseXML(responseAsXml));
+      var rows = parsed.find("tbody").find("tr");
+      rows.each(function (index) {
+        var links = $(rows[index]).find("td").find("a");
+        if (links.length === 3) {
+          var country = $(links[0]).text();
+          var headOfStateDateOfBirth = $(links[1]).text();
+          var headOfStateName = $(links[2]).text();
+          response.push({
+            country:country,
+            headOfState:{
+              name:headOfStateName,
+              dateOfBirth:headOfStateDateOfBirth
+            }
+          });
+        }
+      });
+      console.log(response);
     });
   });
 
