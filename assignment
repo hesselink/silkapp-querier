@@ -1,0 +1,32 @@
+Build a timeline visualization of data contained in Silk.
+
+Silk sites contain data with inferred types. One of these types is
+'date'. However, currently no visualizations use this data. Your task
+is to build a timeline visualization. It should plot pages (or some
+data about them) on a timeline, using a tag with type 'date' of those
+pages to order them.
+
+To get the data, you can use the query function provided in the API.
+The easiest way to figure out how this works, is to use a browser's
+developer tools to inspect the requests the explore mode (click in the
+textbox at the top of a site, then choose one of the 'explore' links).
+
+The 'world.silkapp.com' site is an example of a site that has a date
+value. For example, 'Person' pages have a 'birthdate' tag. However,
+don't hardcode your visualization to a single site or tag.
+
+You're free to choose any publicly available timeline component, or
+build one yourself.
+
+The visualization should run in a browser. However, because of cross
+domain ajax limitations, you will also have to build a small backend
+to make the requests to the Silk API. You can do this in any language
+you prefer.
+
+During the whole process, I'd like to do a couple of parts together. I
+think finding out how the query API works and how the results look is
+good for this. Afterwards, we'll discuss what works for you and me
+time-wise.
+
+If you have any questions, don't hesitate to ask me (Erik,
+erik@silkapp.com).
