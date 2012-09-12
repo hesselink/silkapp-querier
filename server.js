@@ -24,7 +24,7 @@ app.configure("production", function () {
 app.get("/", routes.index);
 app.post("/query", routes.query);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 5000;
 app.listen(port, function () {
   console.log("express-bootstrap app running");
 });
