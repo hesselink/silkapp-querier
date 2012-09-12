@@ -22,23 +22,13 @@ slice from 0 to 99");
       tabs.removeClass("hidden");
       tabTable.html(responseAsXml);
       var response = [];
-      var dates = [];
       var parsed = $($.parseXML(responseAsXml));
       var rows = parsed.find("tbody").find("tr");
       rows.each(function (index) {
         var links = $(rows[index]).find("td").find("a");
         if (links.length === 3) {
-          var country = $(links[0]).text();
-          var dateOfBirth = new Date($(links[1]).text());
-          dateOfBirth = dateOfBirth.getFullYear() + "," + dateOfBirth.getMonth() + "," + dateOfBirth.getDate();
-          var headOfState = $(links[2]).text();
-          response.push({
-            headline:country,
-            text:"<p>" + headOfState + " of " + country + " was born on " + dateOfBirth + "</p>",
-            startDate:dateOfBirth,
-            endDate:dateOfBirth
-          });
-          dates.push(dateOfBirth);
+          var item = parseXmlRow(links);
+          if (item) response.push(item);
         }
       });
       var timelineSource = {
@@ -59,5 +49,25 @@ slice from 0 to 99");
       });
     });
   });
+
+  function parseXmlRow(links) {
+    var country = $(links[0]).text();
+
+    var dateOfBirth, dateSplit;
+    var dateProperty = $(links[1]).attr("data-normalized-date");
+    if (!dateProperty) return undefined;
+    dateSplit = dateProperty.split(",");
+    if (!dateSplit || dateSplit.length === 1)return undefined;
+    dateOfBirth = new Date(dateSplit[1]);
+    dateOfBirth = dateOfBirth.getFullYear() + "," + dateOfBirth.getMonth() + "," + dateOfBirth.getDate();
+    var headOfState = $(links[2]).text();
+
+    return {
+      headline:country,
+      text:"<p>" + headOfState + " of " + country + " was born on " + dateOfBirth + "</p>",
+      startDate:dateOfBirth,
+      endDate:dateOfBirth
+    };
+  }
 
 })(window.jQuery);
