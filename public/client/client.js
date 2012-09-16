@@ -75,12 +75,12 @@
       });
       model.sites = model.sites.sortBy("documentCount").reverse();
       model.sites.forEach(function (site) {
-        var label = site.uri.$t + ".......Documents: " + site.documentCount;
+        var label = site.uri.$t;
         var value = site.uri.$t;
         fieldSites.append("<option value='" + value + "'>" + label + "</option>");
       });
 
-      fieldSites.prepend("<option value='world.silkapp.com'>world.silkapp.com.......Default</option>");
+      fieldSites.prepend("<option value='world.silkapp.com'>world.silkapp.com</option>");
       fieldSites.trigger("change");
     });
   }
@@ -176,6 +176,9 @@
 
     $.post("/query", {query:query, host:host}, function (response) {
       if (!response.table.tbody.tr || !Array.isArray(response.table.tbody.tr)) return;
+      if (!response.table.thead.tr) return;
+      var dimension = response.table.thead.tr.th[1].div.$t;
+      var headline = fieldDocument.val() + " " + dimension + "s";
       var parsedResponse = [];
       response.table.tbody.tr.forEach(function (tr) {
         if (!tr.td[0] || !tr.td[1] || !tr.td[0].a || !tr.td[1].a) return;
@@ -187,7 +190,6 @@
         var endDate = date.getFullYear() + "," + date.getMonth() + "," + date.getDate();
         parsedResponse.push({
           headline:label,
-          text:"",
           startDate:startDate,
           endDate:endDate
         });
@@ -196,11 +198,12 @@
       else {
         timeline.show();
         error.hide();
+        var text = dimension + "s of " + fieldDocument.val() + "s";
         var timelineSource = {
           timeline:{
-            headline:"Headline",
+            headline:headline,
             type:"default",
-            text:"Text?",
+            text:text,
             startDate:"1900,1,1",
             date:parsedResponse
           }
