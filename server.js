@@ -22,6 +22,8 @@ app.configure("production", function () {
 });
 
 app.get("/", routes.index);
+app.get("/sites", routes.sites);
+app.get("/tags", routes.tags);
 app.post("/query", routes.query);
 
 var port = process.env.PORT || 5000;
