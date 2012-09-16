@@ -183,7 +183,7 @@
       response.table.tbody.tr.forEach(function (tr) {
         if (!tr.td[0] || !tr.td[1] || !tr.td[0].a || !tr.td[1].a) return;
         var label = tr.td[0].a.$t;
-        var rawDate = tr.td[1].a["data-normalized-date"];
+        var rawDate = tr.td[1].a["data-normalized-date"] || tr.td[1].a["data-normalized-year"] || tr.td[1].a["data-normalized-datetime"];
         if (!rawDate) return;
         var date = new Date(rawDate.split(",")[1]);
         var startDate = date.getFullYear() + "," + date.getMonth() + "," + date.getDate();
@@ -196,6 +196,7 @@
       });
       if (parsedResponse.length === 0) return;
       else {
+        timeline.empty();
         timeline.show();
         error.hide();
         var text = dimension + "s of " + fieldDocument.val() + "s";
